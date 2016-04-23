@@ -1,3 +1,5 @@
+#!/bin/sh
+
 ############################################################
 # Dockerfile to build Data Volume Container images
 # Based on Ubuntu
@@ -9,25 +11,15 @@ FROM ubuntu
 # File Author / Maintainer
 MAINTAINER Ashish Kashinath
 
-# Usage: USER [UID]
-#USER ak7
-
-#Install Basic Stuff
-RUN apt-get update && apt-get install -y curl \
-vim
-RUN echo "Basic Installation Over!"
-
-# Create the default data directory
-RUN mkdir -p /data
-
-#Copying strings.txt from host to the container
-ADD strings.txt /data
-
 #Mounting the Volume
 VOLUME ["/data"]
 
-RUN ["gcc", "server.c", "-o server"]
+#Copying strings.txt from host to the container
+ADD string.txt /data/
 
-CMD ["./server", "/data/strings.txt", 8090]
-#ADD /data  
+#Install Basic Stuff
+#RUN apt-get update && apt-get install -y vim
+#&& echo -e "Basic Installation Over!\n\n"
+
+
 

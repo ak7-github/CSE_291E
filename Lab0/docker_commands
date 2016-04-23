@@ -1,6 +1,0 @@
-docker build -t server --file=DockerfileServer .
-docker build -t client --file=DockerfileClient .
-docker build -t dvc --file=DockerfileDVC .
-docker create -v /data --name dvc dvc
-docker run -itd --name=server  --hostname=serverHost --volumes-from=dvc -P server
-docker run -itd --name=client --volumes-from=dvc --link server -P client

@@ -1,32 +1,30 @@
+
 ############################################################
 # Dockerfile to build Server container images
 # Based on Ubuntu
 ############################################################
 
 # Set the base image to Ubuntu
-FROM ubuntu
+FROM gcc
 
 # File Author / Maintainer
 MAINTAINER Ashish Kashinath
 
-# Usage: USER [UID]
-#USER ak7
-
-#Install Basic Stuff
-RUN apt-get update && apt-get install -y curl \
-vim
-RUN echo "Basic Installation Over!"
-
-# Create the default data directory
-RUN mkdir -p /data
-
-#Copying strings.txt from host to the container
-ADD strings.txt /data
-
 #Mounting the Volume
 VOLUME ["/data"]
 
-RUN ["gcc", "server.c", "-o server"]
+#Copy Requisite files from host to the container
+ADD catserver.c .
+ADD compilerscript_server.sh .
+ADD compilerscript_server_backup.sh .
 
-CMD ["./server", "/data/strings.txt", 8090]
-#ADD /data  
+#Install Basic Stuff
+RUN apt-get install -y gcc \
+#echo -e "Basic Installation Over!\n\n" \
+&& chmod +x compilerscript_server.sh \
+&& chmod +x compilerscript_server_backup.sh
+
+# Execute the catserver code
+CMD ["./compilerscript_server_backup.sh"]
+
+

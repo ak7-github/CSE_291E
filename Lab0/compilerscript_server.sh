@@ -1,3 +1,3 @@
+#!/bin/bash
 gcc catserver.c -o catserver
-./catserver /data/strings.txt 8087
-
+./catserver /data/string.txt 8087
